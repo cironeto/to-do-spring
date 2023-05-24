@@ -38,7 +38,7 @@ public class UserService implements ApplicationCrudService<UserRequest, UserResp
     public List<UserResponse> findAll() {
         return userRepository.findAll()
                 .stream()
-                .map(u -> new UserResponse(u.getId(), u.getName(), u.getEmail()))
+                .map(user -> new UserResponse(user.getId(), user.getName(), user.getEmail()))
                 .collect(Collectors.toList());
     }
 

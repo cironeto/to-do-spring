@@ -7,18 +7,21 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String description;
-    @Enumerated(EnumType.STRING)
-    TaskPriority priority;
+    private Long id;
+    private String description;
+    @Enumerated
+    private TaskPriority priority;
+    private boolean taskDone;
+
 
     public Task() {
     }
 
-    public Task(Long id, String description, TaskPriority priority) {
+    public Task(Long id, String description, TaskPriority priority, boolean taskDone) {
         this.id = id;
         this.description = description;
         this.priority = priority;
+        this.taskDone = taskDone;
     }
 
     public Long getId() {
@@ -43,5 +46,13 @@ public class Task {
 
     public void setPriority(TaskPriority priority) {
         this.priority = priority;
+    }
+
+    public boolean isTaskDone() {
+        return taskDone;
+    }
+
+    public void setTaskDone(boolean taskDone) {
+        this.taskDone = taskDone;
     }
 }
