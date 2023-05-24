@@ -14,13 +14,13 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String name;
+    private Long id;
+    private String name;
     @Column(unique = true)
-    String email;
-    String password;
+    private String email;
+    private String password;
     @Enumerated(EnumType.STRING)
-    Role role;
+    private Role role;
 
     public User() {
     }
