@@ -1,9 +1,6 @@
 package dev.cironeto.todospring.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Task {
@@ -12,6 +9,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String description;
+    @Enumerated(EnumType.STRING)
     TaskPriority priority;
 
     public Task() {
