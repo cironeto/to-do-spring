@@ -7,6 +7,7 @@ import dev.cironeto.todospring.model.Task;
 import dev.cironeto.todospring.model.User;
 import dev.cironeto.todospring.repository.TaskRepository;
 import dev.cironeto.todospring.repository.UserRepository;
+import dev.cironeto.todospring.validation.BeanValidator;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,8 @@ public class TaskService implements ApplicationCrudService<TaskRequest, TaskResp
 
     @Override
     public TaskResponse create(TaskRequest taskRequest) {
+        BeanValidator.validate(taskRequest);
+
         var task = new Task();
         task.setDescription(taskRequest.getDescription());
         task.setPriority(taskRequest.getPriority());
@@ -56,6 +59,8 @@ public class TaskService implements ApplicationCrudService<TaskRequest, TaskResp
 
     @Override
     public TaskResponse update(TaskRequest taskRequest, Long id) {
+        BeanValidator.validate(taskRequest);
+
         Task task = taskRepository.getReferenceById(id);
         task.setDescription(taskRequest.getDescription());
         task.setPriority(taskRequest.getPriority());

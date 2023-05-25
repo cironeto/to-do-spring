@@ -1,6 +1,8 @@
 package dev.cironeto.todospring.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Task {
@@ -8,8 +10,10 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
     private String description;
     @Enumerated
+    @NotNull
     private TaskPriority priority;
     private boolean taskCompleted;
     @ManyToOne

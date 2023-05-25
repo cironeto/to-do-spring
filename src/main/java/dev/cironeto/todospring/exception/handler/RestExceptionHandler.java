@@ -1,5 +1,6 @@
-package dev.cironeto.todospring.exception;
+package dev.cironeto.todospring.exception.handler;
 
+import dev.cironeto.todospring.exception.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -53,6 +54,17 @@ public class RestExceptionHandler {
         error.setMessage("The logged in user cannot execute this request");
         error.setStatus(HttpStatus.BAD_REQUEST.value());
         error.setError("User not allowed");
+        error.setPath(request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<StandardError> validationError(ValidationException e, HttpServletRequest request) {
+        var error = new StandardError();
+        error.setTimestamp(Instant.now());
+        error.setMessage(e.getMessage());
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setError("Validation error");
         error.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }

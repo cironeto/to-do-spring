@@ -7,6 +7,7 @@ import dev.cironeto.todospring.exception.DataIntegrityException;
 import dev.cironeto.todospring.model.Role;
 import dev.cironeto.todospring.model.User;
 import dev.cironeto.todospring.repository.UserRepository;
+import dev.cironeto.todospring.validation.BeanValidator;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,8 @@ public class UserService implements ApplicationCrudService<UserRequest, UserResp
 
     @Override
     public UserResponse create(UserRequest userRequest) {
+        BeanValidator.validate(userRequest);
+
         var user = new User();
         user.setName(userRequest.getName());
         user.setEmail(userRequest.getEmail());
@@ -58,6 +61,8 @@ public class UserService implements ApplicationCrudService<UserRequest, UserResp
 
     @Override
     public UserResponse update(UserRequest userRequest, Long id) {
+        BeanValidator.validate(userRequest);
+
         User user = userRepository.getReferenceById(id);
         user.setId(id);
         user.setName(userRequest.getName());
