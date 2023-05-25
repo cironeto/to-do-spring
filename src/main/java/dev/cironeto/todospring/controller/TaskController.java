@@ -2,8 +2,6 @@ package dev.cironeto.todospring.controller;
 
 import dev.cironeto.todospring.dto.TaskRequest;
 import dev.cironeto.todospring.dto.TaskResponse;
-import dev.cironeto.todospring.dto.UserRequest;
-import dev.cironeto.todospring.dto.UserResponse;
 import dev.cironeto.todospring.service.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +46,17 @@ public class TaskController {
     public ResponseEntity<Void> delete(@PathVariable Long id){
         taskService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(value = "/{id}/complete")
+    public ResponseEntity<Void> completeTask(@PathVariable Long id){
+        taskService.completeTask(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "uncompleted")
+    public ResponseEntity<List<TaskResponse>> getUncompletedTasks(@RequestParam(value = "priority", defaultValue = "-1") Integer priority) {
+        List<TaskResponse> uncompletedTasks = taskService.getUncompletedTasks(priority);
+        return ResponseEntity.ok(uncompletedTasks);
     }
 }

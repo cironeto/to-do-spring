@@ -11,17 +11,20 @@ public class Task {
     private String description;
     @Enumerated
     private TaskPriority priority;
-    private boolean taskDone;
+    private boolean taskCompleted;
+    @ManyToOne
+    private User user;
 
 
     public Task() {
     }
 
-    public Task(Long id, String description, TaskPriority priority, boolean taskDone) {
+    public Task(Long id, String description, TaskPriority priority, boolean taskCompleted, User user) {
         this.id = id;
         this.description = description;
         this.priority = priority;
-        this.taskDone = taskDone;
+        this.taskCompleted = taskCompleted;
+        this.user = user;
     }
 
     public Long getId() {
@@ -48,11 +51,19 @@ public class Task {
         this.priority = priority;
     }
 
-    public boolean isTaskDone() {
-        return taskDone;
+    public boolean isTaskCompleted() {
+        return taskCompleted;
     }
 
-    public void setTaskDone(boolean taskDone) {
-        this.taskDone = taskDone;
+    public void setTaskCompleted(boolean taskCompleted) {
+        this.taskCompleted = taskCompleted;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
