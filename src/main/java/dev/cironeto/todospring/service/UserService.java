@@ -80,8 +80,9 @@ public class UserService implements ApplicationCrudService<UserRequest, UserResp
 
     @Override
     public void delete(Long id) {
+        User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         try {
-            userRepository.deleteById(id);
+            userRepository.delete(user);
         } catch (Exception e){
             throw new DataIntegrityException(e.getMessage());
         }
