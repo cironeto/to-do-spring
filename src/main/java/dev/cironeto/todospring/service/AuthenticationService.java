@@ -1,7 +1,7 @@
 package dev.cironeto.todospring.service;
 
 import dev.cironeto.todospring.dto.AuthenticationDto;
-import dev.cironeto.todospring.dto.TokenDto;
+import dev.cironeto.todospring.dto.TokenResponse;
 import dev.cironeto.todospring.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,11 +20,11 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public TokenDto authenticate(AuthenticationDto request) {
+    public TokenResponse authenticate(AuthenticationDto request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password()));
 
         var user = repository.findByEmail(request.email()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
-        return new TokenDto(jwtToken);
+        return new TokenResponse(jwtToken);
     }
 }
