@@ -23,7 +23,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserResponse> create(@RequestBody UserRequest userRequest){
         UserResponse userResponse = userService.create(userRequest);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userResponse.id()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userResponse.getId()).toUri();
         return ResponseEntity.created(uri).body(userResponse);
     }
     

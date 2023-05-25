@@ -23,7 +23,7 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<TaskResponse> create(@RequestBody TaskRequest taskRequest){
         TaskResponse taskResponse = taskService.create(taskRequest);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(taskResponse.id()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(taskResponse.getId()).toUri();
         return ResponseEntity.created(uri).body(taskResponse);
     }
 

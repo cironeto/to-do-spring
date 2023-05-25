@@ -2,10 +2,12 @@ package dev.cironeto.todospring.service;
 
 import dev.cironeto.todospring.dto.UserRequest;
 import dev.cironeto.todospring.dto.UserResponse;
-import dev.cironeto.todospring.exception.EntityNotFound;
+import dev.cironeto.todospring.exception.BadRequestException;
+import dev.cironeto.todospring.exception.DataIntegrityException;
 import dev.cironeto.todospring.model.Role;
 import dev.cironeto.todospring.model.User;
 import dev.cironeto.todospring.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,42 +28,57 @@ public class UserService implements ApplicationCrudService<UserRequest, UserResp
     @Override
     public UserResponse create(UserRequest userRequest) {
         var user = new User();
-        user.setName(userRequest.name());
-        user.setEmail(userRequest.email());
-        user.setPassword(passwordEncoder.encode(userRequest.password()));
+        user.setName(userRequest.getName());
+        user.setEmail(userRequest.getEmail());
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         user.setRole(Role.USER);
-        User userSaved = userRepository.save(user);
-        return new UserResponse(user.getId(), userSaved.getName(), userSaved.getEmail());
+
+        User userSaved;
+        try {
+            userSaved = userRepository.save(user);
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
+        }
+        return new UserResponse(userSaved);
     }
 
     @Override
     public List<UserResponse> findAll() {
         return userRepository.findAll()
                 .stream()
-                .map(user -> new UserResponse(user.getId(), user.getName(), user.getEmail()))
+                .map(UserResponse::new)
                 .collect(Collectors.toList());
     }
 
     @Override
     public UserResponse findById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFound("User not found"));
-        return new UserResponse(user.getId(), user.getName(), user.getEmail());
+        User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return new UserResponse(user);
     }
 
     @Override
     public UserResponse update(UserRequest userRequest, Long id) {
         User user = userRepository.getReferenceById(id);
         user.setId(id);
-        user.setName(userRequest.name());
-        user.setEmail(userRequest.email());
-        user.setPassword(passwordEncoder.encode(userRequest.password()));
+        user.setName(userRequest.getName());
+        user.setEmail(userRequest.getEmail());
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 
-        User userUpdated = userRepository.save(user);
-        return new UserResponse(userUpdated.getId(), userUpdated.getName(), userUpdated.getEmail());
+        User userUpdated;
+        try {
+            userUpdated = userRepository.save(user);
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
+        }
+        return new UserResponse(userUpdated);
     }
 
     @Override
     public void delete(Long id) {
-        userRepository.deleteById(id);
+        try {
+            userRepository.deleteById(id);
+        } catch (Exception e){
+            throw new DataIntegrityException(e.getMessage());
+        }
     }
 }

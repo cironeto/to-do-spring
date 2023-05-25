@@ -1,6 +1,6 @@
 package dev.cironeto.todospring.controller;
 
-import dev.cironeto.todospring.dto.AuthenticationDto;
+import dev.cironeto.todospring.dto.AuthenticationRequest;
 import dev.cironeto.todospring.dto.TokenResponse;
 import dev.cironeto.todospring.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<TokenResponse> authenticate(@RequestBody AuthenticationDto request) {
+    public ResponseEntity<TokenResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(service.authenticate(request));
     }
 }
