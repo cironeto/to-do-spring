@@ -42,7 +42,7 @@ docker-compose up
 ```
 ```sh
 SQL SERVER LOGIN
-porta: 1433
+http://localhost:1433/
 username: sa
 password: DB@password123
 ```
