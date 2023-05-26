@@ -33,8 +33,8 @@ Para execução deste projeto é necessário ter instalado:
 - Maven
 
 ## Execução
-### Bando de dados:
-**SQL Server instalado localmente:** execute os scripts iniciais da criação do bando de dados existentes no arquivo **init.sql**. A aplicação irá se conectar ao banco pela porta 1433.
+### Banco de dados:
+**SQL Server instalado localmente:** execute os scripts iniciais da criação do banco de dados existentes no arquivo **init.sql**. A aplicação irá se conectar ao banco pela porta 1433.
 
 **Docker:** abra um terminal em **'.../to-do-spring'** e execute para a criação de uma instância do SQL SERVER:
 ```sh
@@ -46,7 +46,7 @@ porta: 1433
 username: sa
 password: DB@password123
 ```
-Em seguida execute os scripts iniciais da criação do bando de dados existentes no arquivo init.sql.
+Em seguida execute os scripts iniciais da criação do banco de dados existentes no arquivo init.sql.
 
 ### Aplicação:
 Execute via IDE ou abra o terminal em '.../to-do-spring' e execute o comando:
