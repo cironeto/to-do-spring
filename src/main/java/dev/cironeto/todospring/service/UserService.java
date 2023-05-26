@@ -4,11 +4,13 @@ import dev.cironeto.todospring.dto.UserRequest;
 import dev.cironeto.todospring.dto.UserResponse;
 import dev.cironeto.todospring.exception.BadRequestException;
 import dev.cironeto.todospring.exception.DataIntegrityException;
+import dev.cironeto.todospring.exception.UserNotAllowedException;
 import dev.cironeto.todospring.model.Role;
 import dev.cironeto.todospring.model.User;
 import dev.cironeto.todospring.repository.UserRepository;
 import dev.cironeto.todospring.validation.BeanValidator;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -81,10 +83,20 @@ public class UserService implements ApplicationCrudService<UserRequest, UserResp
     @Override
     public void delete(Long id) {
         User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+
+        String userEmail = getUserEmailFromContext();
+        if(!userEmail.equals(user.getEmail())){
+            throw new UserNotAllowedException();
+        }
+
         try {
             userRepository.delete(user);
         } catch (Exception e){
             throw new DataIntegrityException(e.getMessage());
         }
+    }
+
+    private String getUserEmailFromContext() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
