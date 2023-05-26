@@ -11,6 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
@@ -115,9 +118,11 @@ class UserServiceTest {
     void delete_ExistingId_DeletesUser() {
         Long userId = 1L;
         User user = new User();
+        user.setEmail("joao@mail.com");
         user.setId(userId);
 
         when(userRepository.findById(userId)).thenReturn(java.util.Optional.of(user));
+        mockSecurityContextHolder("joao@mail.com");
 
         userService.delete(userId);
 
@@ -161,5 +166,13 @@ class UserServiceTest {
         user.setPassword("encodedPassword");
         user.setRole(Role.USER);
         return user;
+    }
+
+    private void mockSecurityContextHolder(String userEmail) {
+        SecurityContext securityContext = mock(SecurityContext.class);
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.getName()).thenReturn(userEmail);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
     }
 }
