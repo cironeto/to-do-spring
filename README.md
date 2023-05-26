@@ -23,6 +23,7 @@ O sistema contém as seguintes funcionalidades:
 - Spring Security / JWT
 - Spring Validation
 - Spring Doc / OpenAPI
+- JUnit
 
 
 ## Requisitos
@@ -39,6 +40,11 @@ Para execução deste projeto é necessário ter instalado:
 **Docker:** abra um terminal em **'.../to-do-spring'** e execute para a criação de uma instância do SQL SERVER:
 ```sh
 docker-compose up
+```
+```sh
+SQL SERVER LOGIN
+username: sa
+password: DB@password123
 ```
 Em seguida execute os scripts iniciais da criação do bando de dados existentes no arquivo init.sql.
 
@@ -58,7 +64,7 @@ Ao executar, a aplicação estará disponível em **http://localhost:8080**
 
 ## REST API Endpoints
 Com a aplicação rodando, acesse a documentação via Swagger para testar as requisições de autenticação e dos recursos:
-**http://localhost:8080/swagger-ui.html**
+**http://localhost:8080/swagger-ui/index.html**
 
 
 <br><br>
