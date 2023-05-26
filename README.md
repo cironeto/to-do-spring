@@ -29,8 +29,7 @@ O sistema contém as seguintes funcionalidades:
 ## Requisitos
 Para execução deste projeto é necessário ter instalado:
 - JDK 17
-- SQL Server
-- Docker (opcional)
+- SQL Server ou Docker
 - Maven
 
 ## Execução
