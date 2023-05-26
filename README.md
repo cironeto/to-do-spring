@@ -35,7 +35,7 @@ Para execução deste projeto é necessário ter instalado:
 
 ## Execução
 ### Bando de dados:
-**SQL Server instalado localmente:** execute os scripts iniciais da criação do bando de dados existentes no arquivo **init.sql**. A aplicação irá se conectar ao bando pela porta 1433.
+**SQL Server instalado localmente:** execute os scripts iniciais da criação do bando de dados existentes no arquivo **init.sql**. A aplicação irá se conectar ao banco pela porta 1433.
 
 **Docker:** abra um terminal em **'.../to-do-spring'** e execute para a criação de uma instância do SQL SERVER:
 ```sh
@@ -43,6 +43,7 @@ docker-compose up
 ```
 ```sh
 SQL SERVER LOGIN
+porta: 1433
 username: sa
 password: DB@password123
 ```
@@ -53,7 +54,7 @@ Execute via IDE ou abra o terminal em '.../to-do-spring' e execute o comando:
 ```sh
 mvn clean install
 ```
-Em seguida,execute a aplicação:
+Em seguida, execute a aplicação:
 
 ```sh
 mvn spring-boot:run
